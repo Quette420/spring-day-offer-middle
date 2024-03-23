@@ -37,15 +37,14 @@ public class EmployeeController {
 
     @PatchMapping("{id}/tasks/{taskId}/status")
     @ResponseStatus(HttpStatus.OK)
-    public void changeTaskStatus(@PathVariable Integer id
-                                          /* other PathVariable and RequestParam */ ) {
-        //TaskStatus status = TaskStatus.valueOf(newStatus);
-        //employeeService.changeTaskStatus ...
+    public void changeTaskStatus(@PathVariable Integer id, @RequestParam String newStatus) {
+        TaskStatus status = TaskStatus.valueOf(newStatus);
+        employeeService.changeTaskStatus(id, status);
     }
 
-    @PostMapping("...")
+    @PostMapping("{id}/tasks")
     @ResponseStatus(HttpStatus.CREATED)
-    public void postNewTask(/* some params */) {
-        //employeeService.postNewTask ...
+    public void postNewTask(@PathVariable("id") Integer id, @RequestBody TaskDTO taskDTO) {
+        employeeService.postNewTask(id, taskDTO);
     }
 }
