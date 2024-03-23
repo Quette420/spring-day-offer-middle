@@ -56,8 +56,9 @@ public class EmployeeService {
     }
 
     @Transactional
-    public void changeTaskStatus(Integer taskId, TaskStatus status) {
-        Task task = taskRepository.findById(taskId).orElseThrow(() -> new UserNotFoundException("Task with id " + taskId + " not found"));
+    public void changeTaskStatus(Integer employeeId, Integer taskId, TaskStatus status) {
+        Employee employee = getEmployeeByIdIfPresent(employeeId);
+        Task task = employee.getTasks().stream().filter(task1 -> task1.getId().equals(taskId)).findFirst().orElseThrow(() -> new TaskNotFoundException("Task with id " + taskId + " not found"));
         task.setStatus(status);
     }
 
